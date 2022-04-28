@@ -1,0 +1,154 @@
+[
+    {
+        "type":"currentWeather",
+        "items":
+            {
+                "temp":"+9",
+                "feelsLike":"Ощущается как -1",
+                "weatherIcon":"01d",
+                "description":"Солнечно"
+            }
+    },
+    {
+        "type": "hourlyWeather",
+        "items": [
+            {
+                "time": "14:00",
+                "weatherIcon": "01d",
+                "temp": "+16"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "02n",
+                "temp": "+17"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "03n",
+                "temp": "+10"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "03d",
+                "temp": "-16"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "04n",
+                "temp": "-20"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "00d",
+                "temp": "+1"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "09n",
+                "temp": "+16"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "10d",
+                "temp": "0"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "10n",
+                "temp": "16"
+            },
+            {
+                "time": "00:00",
+                "weatherIcon": "13d",
+                "temp": "16"
+            }
+        ]
+    },
+    {
+        "type": "dailyWeather",
+        "items": [
+            {
+                "date": "1 апреля",
+                "weekday": "Сегодня",
+                "weatherIcon": "01n"
+                "temp":
+                {
+                    "day":"+16"
+                    "night":"+11"
+                }
+            },
+            {
+                "date": "2 апреля",
+                "weekday": "Завтра",
+                "weatherIcon": "01d"
+                "temp":
+                {
+                    "day":"+1"
+                    "night":"+11"
+                }
+            },
+            {
+                "date": "3 апреля",
+                "weekday": "Суббота",
+                "weatherIcon": "02d"
+                "temp":
+                {
+                    "day":"+1"
+                    "night":"0"
+                }
+            },
+            {
+                "date": "4 апреля",
+                "weekday": "Воскресенье",
+                "weatherIcon": "02n"
+                "temp":
+                {
+                    "day":"+8"
+                    "night":"+6"
+                }
+            },
+            {
+                "date": "5 апреля",
+                "weekday": "Понедельник",
+                "weatherIcon": "03n"
+                "temp":
+                {
+                    "day":"+11"
+                    "night":"+11"
+                }
+            },
+            {
+                "date": "6 апреля",
+                "weekday": "Вторник",
+                "weatherIcon": "03d"
+                "temp":
+                {
+                    "day":"+10"
+                    "night":"+7"
+                }
+            },
+            {
+                "date": "7 апреля",
+                "weekday": "Среда",
+                "weatherIcon": "04n"
+                "temp":
+                {
+                    "day":"+3"
+                    "night":"+1"
+                }
+            },
+            {
+                "date": "8 апреля",
+                "weekday": "Четверг",
+                "weatherIcon": "04d"
+                "temp":
+                {
+                    "day":"-40"
+                    "night":"+1"
+                }
+            }
+            
+        ]
+    }
+]
+
