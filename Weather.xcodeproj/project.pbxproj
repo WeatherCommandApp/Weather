@@ -13,6 +13,7 @@
 		4B7A193E281A8FDC0012E811 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A193D281A8FDC0012E811 /* WeatherViewController.swift */; };
 		4B7A1943281A8FDC0012E811 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A1942281A8FDC0012E811 /* Assets.xcassets */; };
 		4B7A1946281A8FDC0012E811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A1944281A8FDC0012E811 /* LaunchScreen.storyboard */; };
+		846492F52822DB95006F0E95 /* HourlyWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */; };
 		84B9997A281AB98B0088D0BA /* weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B99979281AB98B0088D0BA /* weather.json */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		4B7A1942281A8FDC0012E811 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B7A1945281A8FDC0012E811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B7A1947281A8FDC0012E811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherCell.swift; sourceTree = "<group>"; };
 		84B99979281AB98B0088D0BA /* weather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = weather.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 				4B25D582281AA94700BBD776 /* Extensions */,
 				4B7A1950281A9D630012E811 /* Storyboards */,
 				84B99979281AB98B0088D0BA /* weather.json */,
+				846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7A193E281A8FDC0012E811 /* WeatherViewController.swift in Sources */,
+				846492F52822DB95006F0E95 /* HourlyWeatherCell.swift in Sources */,
 				4B25D586281ACCF400BBD776 /* ModelWeather.swift in Sources */,
 				4B7A193A281A8FDC0012E811 /* AppDelegate.swift in Sources */,
 				4B7A193C281A8FDC0012E811 /* SceneDelegate.swift in Sources */,
