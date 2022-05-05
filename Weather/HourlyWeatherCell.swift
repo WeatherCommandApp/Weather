@@ -26,52 +26,17 @@ class HourlyWeatherCell: UICollectionViewCell {
         self.clipsToBounds = true
         
     }
-    
-    func getDay(value: Int) -> String {
-            switch value {
-            case 1:
-                return "Sunday"
-            case 2:
-                return "Monday"
-            case 3:
-                return "Tuesday"
-            case 4:
-                return "Wednesday"
-            case 5:
-                return "Thursday"
-            case 6:
-                return "Friday"
-            case 7:
-                return "Saturday"
-            default:
-                return ""
-            }
-        }
-    
-    func getDateDayAndTime(timestamp: NSNumber) -> String {
-            let date  = Date(timeIntervalSince1970: Double(truncating: timestamp)/1000)
-            let calendar = Calendar.current
-     
-            if calendar.isDateInToday(date) {
-                let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = NSTimeZone.local
-                dateFormatter.dateFormat = "hh:mm a"
-                let time = dateFormatter.string(from: date)
-                return time
-            }else if calendar.isDateInYesterday(date) {
-                return "Yesterday"
-            }
-            else if calendar.isDateInWeekend(date) {
-                let component = calendar.component(Calendar.Component.weekday, from: date)
-                return self.getDay(value: component)
-            } else {
-                let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = NSTimeZone.local
-                dateFormatter.dateFormat = "dd/MM/YY"
-                let time = dateFormatter.string(from: date)
-                return time
-            }
-        }
+
+    func getTime(timestamp: NSNumber) -> String {
+        
+        let date  = Date(timeIntervalSince1970: TimeInterval(truncating: timestamp))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "HH:mm"
+        let time = dateFormatter.string(from: date)
+        return time
+    }
+
 
     func setupElements() {
         
@@ -83,7 +48,7 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     func configure(with weather: Weather, and description: WeatherDescription) {
         temperature.text = String(weather.temp)
-        time.text = getDateDayAndTime(timestamp: NSNumber(value: weather.dt))
+        time.text = getTime(timestamp: NSNumber(value: weather.dt))
         weatherImage.image = UIImage(named: description.icon)
     }
     
