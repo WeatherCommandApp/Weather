@@ -82,7 +82,6 @@
 				4B25D582281AA94700BBD776 /* Extensions */,
 				4B7A1950281A9D630012E811 /* Storyboards */,
 				84B99979281AB98B0088D0BA /* weather.json */,
-				846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -100,6 +99,7 @@
 		4B7A194E281A9D210012E811 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */,
 				4B7A193D281A8FDC0012E811 /* WeatherViewController.swift */,
 			);
 			path = Controller;
