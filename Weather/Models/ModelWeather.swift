@@ -10,7 +10,7 @@ import UIKit
 
 
 struct WeatherDescription: Decodable, Hashable {
-    let descirption: String
+    let description: String?
     let icon: String
 }
 
