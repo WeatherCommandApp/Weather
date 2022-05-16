@@ -9,7 +9,7 @@ import Foundation
 
 enum ModelType {
     case currentWeather
-    case hourlyWeather
+    //case hourlyWeather
     case dailyWeather
 }
 
