@@ -98,6 +98,5 @@ extension CurrentWeatherCell {
 //        // feelsLike constraints
         feelsLike.topAnchor.constraint(equalTo: weatherDescription.bottomAnchor, constant: 8).isActive = true
         feelsLike.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        
     }
 }

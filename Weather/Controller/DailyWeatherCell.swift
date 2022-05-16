@@ -21,11 +21,11 @@ class DailyWeatherCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 1, alpha: 1)
-        
-        
+        setupConstraints()
+        customizeElements()
     }
     
-    func setupElements() {
+    func customizeElements() {
         date.textColor = .gray
         date.font = UIFont(name: "avenir", size: 8)
         date.translatesAutoresizingMaskIntoConstraints = false
@@ -50,8 +50,10 @@ class DailyWeatherCell: UICollectionViewCell {
         date.text = getDate(timestamp: NSNumber(value: weather[0].dt))
         dayOfTheWeek.text = getDayOfWeek(timestamp: NSNumber(value: weather[0].dt))
         weatherIcon.image = UIImage(named: weather[0].weather[0].icon)
-        dayTemperature.text = "+\(weather[0].temp.day)"
-        nightTemperature.text = "+\(weather[0].temp.night)"
+        dayTemperature.text = "+\(Int(round((weather[0].temp.day * 10)/10)))"
+        nightTemperature.text = "+\(Int(round((weather[0].temp.night * 10)/10)))"
+        
+//        print(dayTemperature)
     }
     
     required init?(coder: NSCoder) {
@@ -69,13 +71,12 @@ extension DailyWeatherCell {
         addSubview(nightTemperature)
         
         // date constraints
-        date.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        date.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
+        date.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        date.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
         // dayOfTheWeek constraints
-        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
         // firstStackView
         let firstStackView = UIStackView()
@@ -92,20 +93,20 @@ extension DailyWeatherCell {
         // firstStackView constraints
         firstStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         firstStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        firstStackView.widthAnchor.constraint(equalToConstant: 90).isActive = true
-        firstStackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        firstStackView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        firstStackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // weatherIcon constraints
-        weatherIcon.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        weatherIcon.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        weatherIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        weatherIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         // dayTemperature constraints
         dayTemperature.widthAnchor.constraint(equalToConstant: 60).isActive = true
         dayTemperature.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         // nightTemperature constraints
-        nightTemperature.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        nightTemperature.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        nightTemperature.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        nightTemperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // secondStackView
         let secondStackView = UIStackView()
@@ -120,16 +121,18 @@ extension DailyWeatherCell {
         addSubview(secondStackView)
         
         // secondStackView constraints
-        secondStackView.trailingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+
         secondStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        secondStackView.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        secondStackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         secondStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 200).isActive = true
     }
     
     func getDate(timestamp: NSNumber) -> String {
         let date  = Date(timeIntervalSince1970: TimeInterval(truncating: timestamp))
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .current
+        dateFormatter.locale = Locale(identifier: "RU_ru")
         dateFormatter.dateFormat = "d MMMM"
         let dayAndMonth = dateFormatter.string(from: date)
         return dayAndMonth
@@ -139,6 +142,7 @@ extension DailyWeatherCell {
         let date = Date (timeIntervalSince1970: TimeInterval(truncating: timestamp))
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .current
+        dateFormatter.locale = Locale(identifier: "RU_ru")
         dateFormatter.dateFormat = "EEEE"
         let dayOfWeek = dateFormatter.string(from: date)
         return dayOfWeek

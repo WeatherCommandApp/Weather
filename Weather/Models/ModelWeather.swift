@@ -40,7 +40,8 @@ struct DailyWeather: Decodable, Hashable {
 
 
 
-struct ModelWeather: Decodable, Hashable {
+struct ModelWeather: Decodable, Hashable, Identifiable {
+    let id: UUID?
     let current: Weather
     let hourly: [Weather]
     let daily: [DailyWeather]
