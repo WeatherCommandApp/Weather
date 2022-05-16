@@ -9,7 +9,8 @@ import Foundation
 
 enum ModelType {
     case currentWeather
-    
+    case hourlyWeather
+    case dailyWeather
 }
 
 struct ModelItem: Hashable {
