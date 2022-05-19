@@ -23,11 +23,12 @@ class DailyWeatherCell: UICollectionViewCell {
         backgroundColor = UIColor(white: 1, alpha: 1)
         setupConstraints()
         customizeElements()
+        
     }
     
     func customizeElements() {
         date.textColor = .gray
-        date.font = UIFont(name: "avenir", size: 8)
+        date.font = UIFont(name: "avenir", size: 11)
         date.translatesAutoresizingMaskIntoConstraints = false
         
         dayOfTheWeek.textColor = .black
@@ -41,17 +42,18 @@ class DailyWeatherCell: UICollectionViewCell {
         dayTemperature.translatesAutoresizingMaskIntoConstraints = false
         
         nightTemperature.textColor = .gray
-        nightTemperature.font = UIFont(name: "avenir", size: 8)
+        nightTemperature.font = UIFont(name: "avenir", size: 10)
         nightTemperature.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func configure(with modelWeather: ModelWeather) {
         let weather = modelWeather.daily
         date.text = getDate(timestamp: NSNumber(value: weather[0].dt))
-        dayOfTheWeek.text = getDayOfWeek(timestamp: NSNumber(value: weather[0].dt))
+        dayOfTheWeek.text = getDayOfWeek(timestamp: NSNumber(value: weather[0].dt)).capitalized
         weatherIcon.image = UIImage(named: weather[0].weather[0].icon)
-        dayTemperature.text = "+\(Int(round((weather[0].temp.day * 10)/10)))"
-        nightTemperature.text = "+\(Int(round((weather[0].temp.night * 10)/10)))"
+        dayTemperature.text = getTemperature(temperature: weather[0].temp.day)
+        nightTemperature.text = getTemperature(temperature: weather[0].temp.night)
         
 //        print(dayTemperature)
     }
@@ -71,17 +73,17 @@ extension DailyWeatherCell {
         addSubview(nightTemperature)
         
         // date constraints
-        date.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        date.widthAnchor.constraint(equalToConstant: 80).isActive = true
         date.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
         // dayOfTheWeek constraints
-        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         // firstStackView
         let firstStackView = UIStackView()
         firstStackView.axis = NSLayoutConstraint.Axis.vertical
-        firstStackView.distribution = UIStackView.Distribution.equalSpacing
+        firstStackView.distribution = UIStackView.Distribution.equalCentering
         firstStackView.alignment = UIStackView.Alignment.leading
         
         firstStackView.addArrangedSubview(date)
@@ -93,26 +95,26 @@ extension DailyWeatherCell {
         // firstStackView constraints
         firstStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         firstStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        firstStackView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        firstStackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        firstStackView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        firstStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         // weatherIcon constraints
         weatherIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
         weatherIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         // dayTemperature constraints
-        dayTemperature.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        dayTemperature.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        dayTemperature.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        dayTemperature.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         // nightTemperature constraints
-        nightTemperature.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        nightTemperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        nightTemperature.widthAnchor.constraint(equalToConstant:40).isActive = true
+        nightTemperature.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         // secondStackView
         let secondStackView = UIStackView()
         secondStackView.axis = NSLayoutConstraint.Axis.horizontal
-        secondStackView.distribution = UIStackView.Distribution.equalSpacing
-        secondStackView.alignment = UIStackView.Alignment.trailing
+        secondStackView.distribution = UIStackView.Distribution.equalCentering
+        secondStackView.alignment = UIStackView.Alignment.center
         
         secondStackView.addArrangedSubview(weatherIcon)
         secondStackView.addArrangedSubview(dayTemperature)
@@ -121,11 +123,11 @@ extension DailyWeatherCell {
         addSubview(secondStackView)
         
         // secondStackView constraints
-
         secondStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        secondStackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        secondStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 200).isActive = true
+        secondStackView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        secondStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 180).isActive = true
+//        secondStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
     func getDate(timestamp: NSNumber) -> String {
@@ -146,5 +148,17 @@ extension DailyWeatherCell {
         dateFormatter.dateFormat = "EEEE"
         let dayOfWeek = dateFormatter.string(from: date)
         return dayOfWeek
+    }
+    
+    func getTemperature(temperature: Double) -> String {
+        var temperatureWithSigns = ""
+        
+        if temperature > 0 {
+            temperatureWithSigns = "+\(Int(round((temperature * 10)/10)))°"
+        } else {
+            temperatureWithSigns = "\(Int(round((temperature * 10)/10)))°"
+        }
+        
+        return temperatureWithSigns
     }
 }
