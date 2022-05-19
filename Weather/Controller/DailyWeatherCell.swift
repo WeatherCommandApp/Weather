@@ -80,6 +80,8 @@ extension DailyWeatherCell {
         dayOfTheWeek.widthAnchor.constraint(equalToConstant: 80).isActive = true
         dayOfTheWeek.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
+        
+        
         // firstStackView
         let firstStackView = UIStackView()
         firstStackView.axis = NSLayoutConstraint.Axis.vertical
