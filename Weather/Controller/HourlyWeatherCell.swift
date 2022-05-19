@@ -55,20 +55,11 @@ extension HourlyWeatherCell {
         
         time.font = UIFont(name: "avenir", size: 15)
         time.textColor = .black
-        time.backgroundColor = .yellow
+        time.textAlignment = .center
         
         temperature.font = UIFont(name: "avenir", size: 15)
         temperature.textColor = .black
-        temperature.backgroundColor = .blue
-        
-        weatherImage.layer.borderColor = UIColor.black.cgColor
-        weatherImage.layer.borderWidth = 0.5
-        weatherImage.layer.cornerRadius = 5.0
-        
-        weatherImage.layer.shadowColor = UIColor.black.cgColor
-        weatherImage.layer.shadowOffset = CGSize(width: 4, height: 4)
-        weatherImage.layer.shadowOpacity = 0.2
-        weatherImage.layer.shadowRadius = 5.0
+        temperature.textAlignment = .center
 
     }
     
@@ -85,12 +76,12 @@ extension HourlyWeatherCell {
         
         // weatherImage constraints
         weatherImage.translatesAutoresizingMaskIntoConstraints = false
-        weatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        weatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        weatherImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // temperature constraints
         temperature.translatesAutoresizingMaskIntoConstraints = false
-        temperature.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        temperature.widthAnchor.constraint(equalToConstant: 50).isActive = true
         temperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let stackView = UIStackView()
@@ -103,9 +94,16 @@ extension HourlyWeatherCell {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
+        //settings of stak's views
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
+        
+        //settings of stackView layer
+        stackView.layer.shadowColor = UIColor.black.cgColor
+        stackView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        stackView.layer.shadowOpacity = 0.2
+        stackView.layer.shadowRadius = 2.0
 
         
         //stackView constraints
@@ -113,7 +111,6 @@ extension HourlyWeatherCell {
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        
         stackView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
                 

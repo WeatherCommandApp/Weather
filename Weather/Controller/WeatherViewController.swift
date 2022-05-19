@@ -152,7 +152,7 @@ class WeatherViewController: UIViewController {
     }
     
     func createHourlyWeatherSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 9.0),
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 6.0),
                                               heightDimension: .fractionalHeight(1.0))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
