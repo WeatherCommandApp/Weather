@@ -19,9 +19,9 @@ class HourlyWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 1, alpha: 1)
         
-        setupElements()
         setupConstraints()
-        
+        setupElements()
+
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
         
@@ -46,10 +46,11 @@ class HourlyWeatherCell: UICollectionViewCell {
         
     }
     
-    func configure(with weather: Weather, and description: WeatherDescription) {
-        temperature.text = String(weather.temp)
-        time.text = getTime(timestamp: NSNumber(value: weather.dt))
-        weatherImage.image = UIImage(named: description.icon)
+    func configure(with weather: ModelWeather) {
+        let ourWeather = weather.hourly
+        temperature.text = String(ourWeather[0].temp)
+        time.text = getTime(timestamp: NSNumber(value: ourWeather[0].dt))
+        weatherImage.image = UIImage(named: ourWeather[0].weather[0].icon)
     }
     
     required init?(coder: NSCoder) {
