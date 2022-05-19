@@ -19,8 +19,8 @@ class HourlyWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 1, alpha: 1)
         
+        customizeElements()
         setupConstraints()
-        setupElements()
 
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
@@ -36,19 +36,10 @@ class HourlyWeatherCell: UICollectionViewCell {
         let time = dateFormatter.string(from: date)
         return time
     }
-
-
-    func setupElements() {
-        
-        weatherImage.translatesAutoresizingMaskIntoConstraints = false
-        temperature.translatesAutoresizingMaskIntoConstraints = false
-        time.translatesAutoresizingMaskIntoConstraints = false
-        
-    }
     
     func configure(with weather: ModelWeather) {
         let ourWeather = weather.hourly
-        temperature.text = String(ourWeather[0].temp)
+        temperature.text = "+\(Int(round((ourWeather[0].temp * 10) / 10)))\u{00B0}"
         time.text = getTime(timestamp: NSNumber(value: ourWeather[0].dt))
         weatherImage.image = UIImage(named: ourWeather[0].weather[0].icon)
     }
@@ -60,26 +51,71 @@ class HourlyWeatherCell: UICollectionViewCell {
 
 extension HourlyWeatherCell {
     
+    func customizeElements() {
+        
+        time.font = UIFont(name: "avenir", size: 15)
+        time.textColor = .black
+        time.backgroundColor = .yellow
+        
+        temperature.font = UIFont(name: "avenir", size: 15)
+        temperature.textColor = .black
+        temperature.backgroundColor = .blue
+        
+        weatherImage.layer.borderColor = UIColor.black.cgColor
+        weatherImage.layer.borderWidth = 0.5
+        weatherImage.layer.cornerRadius = 5.0
+        
+        weatherImage.layer.shadowColor = UIColor.black.cgColor
+        weatherImage.layer.shadowOffset = CGSize(width: 4, height: 4)
+        weatherImage.layer.shadowOpacity = 0.2
+        weatherImage.layer.shadowRadius = 5.0
+
+    }
+    
     func setupConstraints() {
+        
         addSubview(weatherImage)
         addSubview(temperature)
         addSubview(time)
         
-        //time constraints
-        time.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        time.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        time.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        time.bottomAnchor.constraint(equalTo: weatherImage.topAnchor).isActive = true
-        //weatherImage constraints
-        weatherImage.topAnchor.constraint(equalTo: time.bottomAnchor).isActive = true
-        weatherImage.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        weatherImage.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        weatherImage.bottomAnchor.constraint(equalTo: temperature.topAnchor).isActive = true
+        // time constraints
+        time.translatesAutoresizingMaskIntoConstraints = false
+        time.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        time.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        //temperature constraints
-        temperature.topAnchor.constraint(equalTo: weatherImage.bottomAnchor).isActive = true
-        temperature.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        temperature.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        temperature.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        // weatherImage constraints
+        weatherImage.translatesAutoresizingMaskIntoConstraints = false
+        weatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        // temperature constraints
+        temperature.translatesAutoresizingMaskIntoConstraints = false
+        temperature.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        temperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        let stackView = UIStackView()
+        
+        addSubview(stackView)
+        
+        stackView.addArrangedSubview(time)
+        stackView.addArrangedSubview(weatherImage)
+        stackView.addArrangedSubview(temperature)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+
+        
+        //stackView constraints
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        stackView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+                
     }
 }
