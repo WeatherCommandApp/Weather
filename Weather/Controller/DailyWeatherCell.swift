@@ -17,10 +17,11 @@ class DailyWeatherCell: UICollectionViewCell {
     let weatherIcon = UIImageView()
     let dayTemperature = UILabel()
     let nightTemperature = UILabel()
+    let separator = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(white: 1, alpha: 1)
+        
         setupConstraints()
         customizeElements()
         
@@ -45,6 +46,7 @@ class DailyWeatherCell: UICollectionViewCell {
         nightTemperature.font = UIFont(name: "avenir", size: 10)
         nightTemperature.translatesAutoresizingMaskIntoConstraints = false
         
+        separator.backgroundColor = .systemGray6
     }
     
     func configure(with modelWeather: ModelWeather) {
@@ -54,8 +56,6 @@ class DailyWeatherCell: UICollectionViewCell {
         weatherIcon.image = UIImage(named: weather[0].weather[0].icon)
         dayTemperature.text = getTemperature(temperature: weather[0].temp.day)
         nightTemperature.text = getTemperature(temperature: weather[0].temp.night)
-        
-//        print(dayTemperature)
     }
     
     required init?(coder: NSCoder) {
@@ -71,6 +71,10 @@ extension DailyWeatherCell {
         addSubview(weatherIcon)
         addSubview(dayTemperature)
         addSubview(nightTemperature)
+        addSubview(separator)
+       
+        
+
         
         // date constraints
         date.widthAnchor.constraint(equalToConstant: 80).isActive = true
@@ -129,7 +133,14 @@ extension DailyWeatherCell {
         secondStackView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         secondStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 180).isActive = true
-//        secondStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        // delimiter constraints
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        separator.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+
     }
     
     func getDate(timestamp: NSNumber) -> String {
