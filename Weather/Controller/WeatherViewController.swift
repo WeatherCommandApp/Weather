@@ -25,6 +25,7 @@ class WeatherViewController: UIViewController {
             type: ModelType.dailyWeather
         )
     ]
+    
     var collectionView: UICollectionView!
     
     var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
@@ -55,7 +56,7 @@ class WeatherViewController: UIViewController {
     }
     
     // MARK: - Manage the data in UICV
-    
+
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
             
@@ -131,7 +132,7 @@ class WeatherViewController: UIViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 30, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 60, trailing: 0)
         
         return section
     }
