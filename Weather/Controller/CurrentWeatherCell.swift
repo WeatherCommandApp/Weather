@@ -35,7 +35,7 @@ class CurrentWeatherCell: UICollectionViewCell {
     
     func customizeElements() {
         temperature.textColor = .black
-        temperature.font = UIFont(name: "avenir", size: 35)
+        temperature.font = UIFont(name: "avenir", size: 40)
         temperature.translatesAutoresizingMaskIntoConstraints = false
         
         weatherIcon.translatesAutoresizingMaskIntoConstraints = false
@@ -63,12 +63,12 @@ extension CurrentWeatherCell {
         addSubview(feelsLike)
         
         // temperature constraints
-        temperature.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        temperature.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        temperature.widthAnchor.constraint(equalToConstant: 88).isActive = true
+        temperature.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         // weatherIcon constraints
-        weatherIcon.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        weatherIcon.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        weatherIcon.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        weatherIcon.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         // Stack View
         let stackView = UIStackView()
@@ -86,7 +86,7 @@ extension CurrentWeatherCell {
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 140).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: 168).isActive = true
 //        stackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
 //
 //        // weatherDiscription constraints
@@ -101,7 +101,6 @@ extension CurrentWeatherCell {
     }
     
     func getTemperature(temperature: Double) -> String {
-        print(temperature)
         var temperatureWithSigns = ""
         
         if temperature > 0 {
