@@ -5,7 +5,6 @@
 //  Created by Дарья Носова on 04.05.2022.
 //
 
-import Foundation
 import UIKit
 
 extension Bundle {

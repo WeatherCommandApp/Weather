@@ -29,21 +29,21 @@ class DailyWeatherCell: UICollectionViewCell {
     
     func customizeElements() {
         date.textColor = .gray
-        date.font = UIFont(name: "avenir", size: 11)
+        date.font = UIFont(name: "avenir", size: 12)
         date.translatesAutoresizingMaskIntoConstraints = false
         
         dayOfTheWeek.textColor = .black
-        dayOfTheWeek.font = UIFont(name: "avenir", size: 12)
+        dayOfTheWeek.font = UIFont(name: "avenir", size: 15)
         dayOfTheWeek.translatesAutoresizingMaskIntoConstraints = false
         
         weatherIcon.translatesAutoresizingMaskIntoConstraints = false
         
         dayTemperature.textColor = .black
-        dayTemperature.font = UIFont(name: "avenir", size: 12)
+        dayTemperature.font = UIFont(name: "avenir", size: 15)
         dayTemperature.translatesAutoresizingMaskIntoConstraints = false
         
         nightTemperature.textColor = .gray
-        nightTemperature.font = UIFont(name: "avenir", size: 10)
+        nightTemperature.font = UIFont(name: "avenir", size: 12)
         nightTemperature.translatesAutoresizingMaskIntoConstraints = false
         
         separator.backgroundColor = .systemGray6
@@ -74,22 +74,20 @@ extension DailyWeatherCell {
         addSubview(separator)
        
         
-
-        
         // date constraints
-        date.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        date.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        date.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        date.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         // dayOfTheWeek constraints
-        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         
         
         // firstStackView
         let firstStackView = UIStackView()
         firstStackView.axis = NSLayoutConstraint.Axis.vertical
-        firstStackView.distribution = UIStackView.Distribution.equalCentering
+        firstStackView.distribution = UIStackView.Distribution.fillProportionally
         firstStackView.alignment = UIStackView.Alignment.leading
         
         firstStackView.addArrangedSubview(date)
@@ -101,8 +99,9 @@ extension DailyWeatherCell {
         // firstStackView constraints
         firstStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         firstStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        firstStackView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        firstStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        firstStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        firstStackView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        
         
         // weatherIcon constraints
         weatherIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
@@ -131,8 +130,8 @@ extension DailyWeatherCell {
         // secondStackView constraints
         secondStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         secondStackView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        secondStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 180).isActive = true
+        secondStackView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 160).isActive = true
         
         // delimiter constraints
         separator.translatesAutoresizingMaskIntoConstraints = false

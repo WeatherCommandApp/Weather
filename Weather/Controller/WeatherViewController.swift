@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 let data = Bundle.main.decode(ModelWeather.self, from: "weather.json")
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     let sections: [ModelItem] = [
         ModelItem(
@@ -26,22 +27,29 @@ class WeatherViewController: UIViewController {
         )
     ]
     
+    var latCoordinates: Double?
+    var lonCoordinates: Double?
+    
+    var locationManager: CLLocationManager?
     var collectionView: UICollectionView!
-    
     var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
         
         view.backgroundColor = .orange
         setupCollectionView()
         createDataSource()
         reloadData()
-        
     }
     
-    
+
     func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         
@@ -171,6 +179,14 @@ class WeatherViewController: UIViewController {
         return section
     }
     
+}
+
+extension WeatherViewController {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        latCoordinates = (round(locations[0].coordinate.latitude * 100))/100
+        lonCoordinates = (round(locations[0].coordinate.longitude * 100))/100
+        locationManager?.stopUpdatingLocation()
+    }
 }
 
 // MARK: - SwiftUI
