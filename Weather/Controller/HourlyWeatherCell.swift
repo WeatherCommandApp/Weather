@@ -60,29 +60,12 @@ extension HourlyWeatherCell {
         temperature.font = UIFont(name: "avenir", size: 15)
         temperature.textColor = .black
         temperature.textAlignment = .center
+        
+        
 
     }
     
     func setupConstraints() {
-        
-        addSubview(weatherImage)
-        addSubview(temperature)
-        addSubview(time)
-        
-        // time constraints
-        time.translatesAutoresizingMaskIntoConstraints = false
-        time.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        time.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        // weatherImage constraints
-        weatherImage.translatesAutoresizingMaskIntoConstraints = false
-        weatherImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        weatherImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        // temperature constraints
-        temperature.translatesAutoresizingMaskIntoConstraints = false
-        temperature.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        temperature.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let stackView = UIStackView()
         
@@ -98,21 +81,21 @@ extension HourlyWeatherCell {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
+        stackView.spacing = 5
         
         //settings of stackView layer
         stackView.layer.shadowColor = UIColor.black.cgColor
         stackView.layer.shadowOffset = CGSize(width: 5, height: 5)
         stackView.layer.shadowOpacity = 0.2
         stackView.layer.shadowRadius = 2.0
-
+        
+//        stackView.backgroundColor = .brown
         
         //stackView constraints
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        stackView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-                
+        
     }
 }
