@@ -76,6 +76,7 @@ extension HourlyWeatherCell {
         stackView.addArrangedSubview(temperature)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        weatherImage.translatesAutoresizingMaskIntoConstraints = false
         
         //settings of stak's views
         stackView.axis = .vertical
@@ -88,14 +89,16 @@ extension HourlyWeatherCell {
         stackView.layer.shadowOffset = CGSize(width: 5, height: 5)
         stackView.layer.shadowOpacity = 0.2
         stackView.layer.shadowRadius = 2.0
-        
-//        stackView.backgroundColor = .brown
-        
+
         //stackView constraints
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         
+        //weatherImage constraints
+        weatherImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
     }
 }
