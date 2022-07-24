@@ -29,8 +29,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     var latCoordinates: Double?
     var lonCoordinates: Double?
-    
     var locationManager: CLLocationManager?
+    
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
     
