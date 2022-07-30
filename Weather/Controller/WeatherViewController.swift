@@ -10,32 +10,29 @@ import CoreLocation
 
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+    
     private var data: ModelWeather?
     
-    var sections: [ModelItem] = []
+    private var sections: [ModelItem] = []
     
-    var latCoordinates: Double?
-    var lonCoordinates: Double?
-    var locationManager: CLLocationManager?
+    private var latCoordinates: Double?
+    private var lonCoordinates: Double?
+    private var locationManager: CLLocationManager?
     
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
-        print(latCoordinates ?? "0")
-        print(lonCoordinates ?? "0")
-        
-        
-        fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
-        print("\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
     }
     
 
@@ -197,14 +194,16 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             self.collectionView.reloadData()
         }
     }
-    
 }
 
 extension WeatherViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        latCoordinates = (round(locations[0].coordinate.latitude * 100))/100
-        lonCoordinates = (round(locations[0].coordinate.longitude * 100))/100
-        locationManager?.stopUpdatingLocation()
+        if let location = locations.first {
+            latCoordinates = round(location.coordinate.latitude * 100) / 100
+            lonCoordinates = round(location.coordinate.longitude * 100) / 100
+            self.locationManager?.stopUpdatingLocation()
+            fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
+        }
     }
 }
 
