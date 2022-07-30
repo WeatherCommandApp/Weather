@@ -8,8 +8,6 @@
 import UIKit
 import CoreLocation
 
-//let data = Bundle.main.decode(ModelWeather.self, from: "weather.json")
-
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     private var data: ModelWeather?
@@ -32,10 +30,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
+        print(latCoordinates ?? "0")
+        print(lonCoordinates ?? "0")
         
-        view.backgroundColor = .orange
         
         fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
+        print("\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
     }
     
 
@@ -192,6 +192,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 self.setupSections(data: self.data!)
             }
             self.setupCollectionView()
+            self.createDataSource()
             self.reloadData()
             self.collectionView.reloadData()
         }

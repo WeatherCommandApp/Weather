@@ -29,7 +29,7 @@ class CurrentWeatherCell: UICollectionViewCell {
         let weather = modelWeather.current
         temperature.text = "\(getTemperature(temperature: weather.temp))"
         weatherIcon.image = UIImage(named: weather.weather[0].icon)
-        weatherDescription.text = weather.weather[0].description?.capitalized ?? ""
+        weatherDescription.text = weather.weather[0].description ?? ""
         feelsLike.text = "Ощущается как \(getTemperature(temperature: weather.feels_like))"
     }
     
