@@ -8,24 +8,13 @@
 import UIKit
 import CoreLocation
 
-let data = Bundle.main.decode(ModelWeather.self, from: "weather.json")
+//let data = Bundle.main.decode(ModelWeather.self, from: "weather.json")
+
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+    private var data: ModelWeather
     
-    let sections: [ModelItem] = [
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.currentWeather
-        ),
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.hourlyWeather
-        ),
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.dailyWeather
-        )
-    ]
+    var sections: [ModelItem] = []
     
     var latCoordinates: Double?
     var lonCoordinates: Double?
@@ -33,6 +22,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +35,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         view.backgroundColor = .orange
         setupCollectionView()
-        createDataSource()
+        fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
+        
         reloadData()
     }
     
@@ -177,6 +168,32 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         section.contentInsets = NSDirectionalEdgeInsets.init(top: 30, leading: 10, bottom: 10, trailing: 10)
         
         return section
+    }
+    
+    private func setupSections(data: ModelWeather){
+        self.sections = [
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.currentWeather
+            ),
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.hourlyWeather
+            ),
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.dailyWeather
+            )
+        ]
+     
+    }
+    
+    private func fetchData(from url: String?) {
+        NetworkManager.shared.fetchData(from: url) { weather in
+            self.data = weather
+            self.reloadData()
+            self.setupSections(data: self.data)
+        }
     }
     
 }
