@@ -12,7 +12,7 @@ import CoreLocation
 
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
-    private var data: ModelWeather
+    private var data: ModelWeather?
     
     var sections: [ModelItem] = []
     
@@ -34,10 +34,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.startUpdatingLocation()
         
         view.backgroundColor = .orange
-        setupCollectionView()
-        fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
         
-        reloadData()
+        fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
     }
     
 
@@ -58,7 +56,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
 
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
-            
             switch self.sections[indexPath.section].type {
             case .currentWeather:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentWeatherCell.reuseId, for: indexPath) as? CurrentWeatherCell
@@ -191,8 +188,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     private func fetchData(from url: String?) {
         NetworkManager.shared.fetchData(from: url) { weather in
             self.data = weather
+            if self.data != nil {
+                self.setupSections(data: self.data!)
+            }
+            self.setupCollectionView()
             self.reloadData()
-            self.setupSections(data: self.data)
+            self.collectionView.reloadData()
         }
     }
     
