@@ -8,45 +8,31 @@
 import UIKit
 import CoreLocation
 
-let data = Bundle.main.decode(ModelWeather.self, from: "weather.json")
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
-    let sections: [ModelItem] = [
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.currentWeather
-        ),
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.hourlyWeather
-        ),
-        ModelItem(
-            data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
-            type: ModelType.dailyWeather
-        )
-    ]
+    private var data: ModelWeather?
     
-    var latCoordinates: Double?
-    var lonCoordinates: Double?
-    var locationManager: CLLocationManager?
+    private var sections: [ModelItem] = []
     
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
+    private var latCoordinates: Double?
+    private var lonCoordinates: Double?
+    private var locationManager: CLLocationManager?
+    
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
-        
-        view.backgroundColor = .orange
-        setupCollectionView()
-        createDataSource()
-        reloadData()
     }
     
 
@@ -67,7 +53,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
 
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
-            
             switch self.sections[indexPath.section].type {
             case .currentWeather:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentWeatherCell.reuseId, for: indexPath) as? CurrentWeatherCell
@@ -179,13 +164,46 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         return section
     }
     
+    private func setupSections(data: ModelWeather){
+        self.sections = [
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.currentWeather
+            ),
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.hourlyWeather
+            ),
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.dailyWeather
+            )
+        ]
+     
+    }
+    
+    private func fetchData(from url: String?) {
+        NetworkManager.shared.fetchData(from: url) { weather in
+            self.data = weather
+            if self.data != nil {
+                self.setupSections(data: self.data!)
+            }
+            self.setupCollectionView()
+            self.createDataSource()
+            self.reloadData()
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 extension WeatherViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        latCoordinates = (round(locations[0].coordinate.latitude * 100))/100
-        lonCoordinates = (round(locations[0].coordinate.longitude * 100))/100
-        locationManager?.stopUpdatingLocation()
+        if let location = locations.first {
+            latCoordinates = round(location.coordinate.latitude * 100) / 100
+            lonCoordinates = round(location.coordinate.longitude * 100) / 100
+            self.locationManager?.stopUpdatingLocation()
+            fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
+        }
     }
 }
 

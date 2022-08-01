@@ -46,3 +46,7 @@ struct ModelWeather: Decodable, Hashable, Identifiable {
     let hourly: [Weather]
     let daily: [DailyWeather]
 }
+
+enum Link: String {
+    case weatherApi = "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely&appid=c4c39f37c5b467c46d473337ce99337d&units=metric&lang=ru"
+}
