@@ -49,8 +49,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    // MARK: - Manage the data in UICV
-
+    // MARK: - Manage the data in UICollectionView
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
             switch self.sections[indexPath.section].type {
@@ -69,7 +68,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             }
         })
     }
-    
     
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<ModelItem, ModelWeather>()
@@ -113,7 +111,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         }
         return layout
     }
-    
     
     func createCurrentWeatherSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -196,6 +193,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
+//MARK: - Location Manager
 extension WeatherViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
@@ -207,8 +205,7 @@ extension WeatherViewController {
     }
 }
 
-// MARK: - SwiftUI
-
+// MARK: - SwiftUI Canvas
 import SwiftUI
 struct WeatherProvider: PreviewProvider {
     static var previews: some View {

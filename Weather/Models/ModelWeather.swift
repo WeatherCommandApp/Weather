@@ -6,15 +6,11 @@
 //
 
 import Foundation
-import UIKit
-
 
 struct WeatherDescription: Decodable, Hashable {
     let description: String?
     let icon: String
 }
-
-
 
 struct Weather: Decodable, Hashable {
     let dt: Int
@@ -23,22 +19,16 @@ struct Weather: Decodable, Hashable {
     let weather: [WeatherDescription]
 }
 
-
-
 struct DailyTemperature: Decodable, Hashable {
     let day: Double
     let night: Double
 }
-
-
 
 struct DailyWeather: Decodable, Hashable {
     let dt: Int
     let temp: DailyTemperature
     let weather: [WeatherDescription]
 }
-
-
 
 struct ModelWeather: Decodable, Hashable, Identifiable {
     let id: UUID?

@@ -70,12 +70,18 @@ extension CurrentWeatherCell {
         weatherIcon.widthAnchor.constraint(equalToConstant: 80).isActive = true
         weatherIcon.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        // Stack View
+        // StackView setups
         let stackView = UIStackView()
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution = UIStackView.Distribution.equalCentering
         stackView.alignment = UIStackView.Alignment.center
-        
+    
+        //stackView's layer setups
+        stackView.layer.shadowColor = UIColor.black.cgColor
+        stackView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        stackView.layer.shadowOpacity = 0.2
+        stackView.layer.shadowRadius = 2.0
+
         stackView.addArrangedSubview(temperature)
         stackView.addArrangedSubview(weatherIcon)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,15 +93,12 @@ extension CurrentWeatherCell {
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
         stackView.widthAnchor.constraint(equalToConstant: 168).isActive = true
-//        stackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-//
-//        // weatherDiscription constraints
+        
+        // weatherDiscription constraints
         weatherDescription.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0).isActive = true
-//        weatherDescription.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         weatherDescription.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//
-//
-//        // feelsLike constraints
+
+        // feelsLike constraints
         feelsLike.topAnchor.constraint(equalTo: weatherDescription.bottomAnchor, constant: 8).isActive = true
         feelsLike.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     }
