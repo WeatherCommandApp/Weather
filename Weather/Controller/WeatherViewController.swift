@@ -9,33 +9,25 @@ import UIKit
 import CoreLocation
 
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController {
     
     private var data: ModelWeather?
-    
     private var sections: [ModelItem] = []
     
     private var latCoordinates: Double?
     private var lonCoordinates: Double?
-    private var locationManager: CLLocationManager?
     
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestWhenInUseAuthorization()
-        locationManager?.startUpdatingLocation()
+        fetchUserLocation()
+        setupNavigationBar()
     }
     
-
     func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         
@@ -49,8 +41,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    // MARK: - Manage the data in UICV
-
+    // MARK: - Manage UICollectionView
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
             switch self.sections[indexPath.section].type {
@@ -69,7 +60,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             }
         })
     }
-    
     
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<ModelItem, ModelWeather>()
@@ -113,7 +103,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         }
         return layout
     }
-    
     
     func createCurrentWeatherSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -194,21 +183,49 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             self.collectionView.reloadData()
         }
     }
-}
-
-extension WeatherViewController {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            latCoordinates = round(location.coordinate.latitude * 100) / 100
-            lonCoordinates = round(location.coordinate.longitude * 100) / 100
-            self.locationManager?.stopUpdatingLocation()
-            fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
+//MARK: - Location Methods
+    private func fetchUserLocation() {
+        LocationManager.shared.getUserLocation { [weak self] location in
+            DispatchQueue.main.async {
+                guard let strongSelf = self else{
+                    return
+                }
+                LocationManager.shared.resolveLocationName(with: location) { locationName in
+                    strongSelf.title = locationName
+                }
+                
+                strongSelf.latCoordinates = location.coordinate.latitude
+                strongSelf.lonCoordinates = location.coordinate.longitude
+                strongSelf.fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(strongSelf.latCoordinates ?? 0)&lon=\(strongSelf.lonCoordinates ?? 0)")
+            }
         }
+    }
+    
+//MARK: - NavigationBar
+    private func setupNavigationBar() {
+        title = "Ваш город"
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let navBarAppearence = UINavigationBarAppearance()
+        navBarAppearence.configureWithOpaqueBackground()
+        navBarAppearence.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navBarAppearence.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navBarAppearence.backgroundColor = UIColor(
+            red: 255/255,
+            green: 255/255,
+            blue: 255/255,
+            alpha: 227/255)
+        
+        navigationController?.navigationBar.standardAppearance = navBarAppearence
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearence
+        
+        navigationController?.navigationBar.tintColor = .white
+        
     }
 }
 
-// MARK: - SwiftUI
-
+// MARK: - SwiftUI Canvas
 import SwiftUI
 struct WeatherProvider: PreviewProvider {
     static var previews: some View {

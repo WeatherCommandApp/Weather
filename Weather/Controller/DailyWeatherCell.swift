@@ -95,6 +95,12 @@ extension DailyWeatherCell {
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(firstStackView)
         
+        //firstStackView's layer setups
+        firstStackView.layer.shadowColor = UIColor.black.cgColor
+        firstStackView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        firstStackView.layer.shadowOpacity = 0.2
+        firstStackView.layer.shadowRadius = 2.0
+
         
         // firstStackView constraints
         firstStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
@@ -127,6 +133,12 @@ extension DailyWeatherCell {
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(secondStackView)
         
+        //stackView's layer setups
+        secondStackView.layer.shadowColor = UIColor.black.cgColor
+        secondStackView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        secondStackView.layer.shadowOpacity = 0.2
+        secondStackView.layer.shadowRadius = 2.0
+
         // secondStackView constraints
         secondStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         secondStackView.widthAnchor.constraint(equalToConstant: 120).isActive = true

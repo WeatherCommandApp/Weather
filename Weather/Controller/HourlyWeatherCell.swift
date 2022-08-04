@@ -47,12 +47,12 @@ class HourlyWeatherCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 extension HourlyWeatherCell {
     
     func customizeElements() {
-        
         time.font = UIFont(name: "avenir", size: 15)
         time.textColor = .black
         time.textAlignment = .center
@@ -60,13 +60,9 @@ extension HourlyWeatherCell {
         temperature.font = UIFont(name: "avenir", size: 15)
         temperature.textColor = .black
         temperature.textAlignment = .center
-        
-        
-
     }
     
     func setupConstraints() {
-        
         let stackView = UIStackView()
         
         addSubview(stackView)
@@ -78,13 +74,13 @@ extension HourlyWeatherCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         weatherImage.translatesAutoresizingMaskIntoConstraints = false
         
-        //settings of stak's views
+        //stackView setups
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         stackView.spacing = 5
         
-        //settings of stackView layer
+        //stackView's layer setups
         stackView.layer.shadowColor = UIColor.black.cgColor
         stackView.layer.shadowOffset = CGSize(width: 5, height: 5)
         stackView.layer.shadowOpacity = 0.2
