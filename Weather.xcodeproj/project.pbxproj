@@ -18,6 +18,7 @@
 		4BFBAAD02822B0AE004FFE5A /* CurrentWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBAACF2822B0AE004FFE5A /* CurrentWeatherCell.swift */; };
 		4BFBAAD62823E7EA004FFE5A /* ModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBAAD52823E7EA004FFE5A /* ModelItem.swift */; };
 		846492F52822DB95006F0E95 /* HourlyWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */; };
+		847D93E0289BA58000F76484 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D93DF289BA58000F76484 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		4BFBAACF2822B0AE004FFE5A /* CurrentWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherCell.swift; sourceTree = "<group>"; };
 		4BFBAAD52823E7EA004FFE5A /* ModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelItem.swift; sourceTree = "<group>"; };
 		846492F42822DB95006F0E95 /* HourlyWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherCell.swift; sourceTree = "<group>"; };
+		847D93DF289BA58000F76484 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				4B7985B428955267002E6E80 /* NetworkManager.swift */,
+				847D93DF289BA58000F76484 /* LocationManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 			files = (
 				4B7A193E281A8FDC0012E811 /* WeatherViewController.swift in Sources */,
 				4B7985B528955267002E6E80 /* NetworkManager.swift in Sources */,
+				847D93E0289BA58000F76484 /* LocationManager.swift in Sources */,
 				846492F52822DB95006F0E95 /* HourlyWeatherCell.swift in Sources */,
 				4BC5EEDF282D1E0E00CC4D2A /* DailyWeatherCell.swift in Sources */,
 				4B25D586281ACCF400BBD776 /* ModelWeather.swift in Sources */,
@@ -349,7 +353,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3Z57ZF4U3;
+				DEVELOPMENT_TEAM = DJT25Q6QHN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/SupportFiles/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app uses your location to personalize your app experience";
@@ -379,7 +383,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3Z57ZF4U3;
+				DEVELOPMENT_TEAM = DJT25Q6QHN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/SupportFiles/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app uses your location to personalize your app experience";

@@ -9,33 +9,25 @@ import UIKit
 import CoreLocation
 
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController {
     
     private var data: ModelWeather?
-    
     private var sections: [ModelItem] = []
     
     private var latCoordinates: Double?
     private var lonCoordinates: Double?
-    private var locationManager: CLLocationManager?
     
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<ModelItem, ModelWeather>?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        fetchUserLocation()
         setupNavigationBar()
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestWhenInUseAuthorization()
-        locationManager?.startUpdatingLocation()
     }
     
-
     func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         
@@ -49,7 +41,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    // MARK: - Manage the data in UICollectionView
+    // MARK: - Manage UICollectionView
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<ModelItem, ModelWeather>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, modelWeather) -> UICollectionViewCell? in
             switch self.sections[indexPath.section].type {
@@ -191,10 +183,27 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             self.collectionView.reloadData()
         }
     }
+//MARK: - Location Methods
+    private func fetchUserLocation() {
+        LocationManager.shared.getUserLocation { [weak self] location in
+            DispatchQueue.main.async {
+                guard let strongSelf = self else{
+                    return
+                }
+                LocationManager.shared.resolveLocationName(with: location) { locationName in
+                    strongSelf.title = locationName
+                }
+                
+                strongSelf.latCoordinates = location.coordinate.latitude
+                strongSelf.lonCoordinates = location.coordinate.longitude
+                strongSelf.fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(strongSelf.latCoordinates ?? 0)&lon=\(strongSelf.lonCoordinates ?? 0)")
+            }
+        }
+    }
     
 //MARK: - NavigationBar
     private func setupNavigationBar() {
-        title = "Текущий город"
+        title = "Ваш город"
         navigationController?.navigationBar.prefersLargeTitles = false
         
         let navBarAppearence = UINavigationBarAppearance()
@@ -213,18 +222,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         navigationController?.navigationBar.tintColor = .white
         
-    }
-}
-
-//MARK: - Location Manager
-extension WeatherViewController {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            latCoordinates = round(location.coordinate.latitude * 100) / 100
-            lonCoordinates = round(location.coordinate.longitude * 100) / 100
-            self.locationManager?.stopUpdatingLocation()
-            fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(latCoordinates ?? 0)&lon=\(lonCoordinates ?? 0)")
-        }
     }
 }
 
