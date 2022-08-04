@@ -352,6 +352,7 @@
 				DEVELOPMENT_TEAM = D3Z57ZF4U3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/SupportFiles/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app uses your location to personalize your app experience";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Weather app wants to use your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -381,6 +382,7 @@
 				DEVELOPMENT_TEAM = D3Z57ZF4U3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/SupportFiles/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app uses your location to personalize your app experience";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Weather app wants to use your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

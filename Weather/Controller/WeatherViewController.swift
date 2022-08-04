@@ -27,7 +27,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
+        setupNavigationBar()
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -190,6 +190,29 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             self.reloadData()
             self.collectionView.reloadData()
         }
+    }
+    
+//MARK: - NavigationBar
+    private func setupNavigationBar() {
+        title = "Текущий город"
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let navBarAppearence = UINavigationBarAppearance()
+        navBarAppearence.configureWithOpaqueBackground()
+        navBarAppearence.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navBarAppearence.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navBarAppearence.backgroundColor = UIColor(
+            red: 255/255,
+            green: 255/255,
+            blue: 255/255,
+            alpha: 227/255)
+        
+        navigationController?.navigationBar.standardAppearance = navBarAppearence
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearence
+        
+        navigationController?.navigationBar.tintColor = .white
+        
     }
 }
 
