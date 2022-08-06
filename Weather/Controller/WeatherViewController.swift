@@ -171,11 +171,18 @@ class WeatherViewController: UIViewController {
      
     }
     
-    private func fetchData(from url: String?) {
-        NetworkManager.shared.fetchData(from: url) { weather in
-            self.data = weather
-            if self.data != nil {
-                self.setupSections(data: self.data!)
+    private func fetchData(from url: String) {
+        NetworkManager.shared.fetchData(from: url) { result in
+            
+            switch result {
+            case .success(let weatherData):
+                self.data = weatherData
+                if let data = self.data {
+                    self.setupSections(data: data)
+                }
+            case .failure(let error):
+                self.failedAlert()
+                print(error)
             }
             self.setupCollectionView()
             self.createDataSource()
@@ -222,6 +229,34 @@ class WeatherViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = .white
         
+    }
+    // MARK: - Alert Controller
+    private func successAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Success",
+                message: "You can see the results in the Debug aria",
+                preferredStyle: .alert
+            )
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func failedAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Failed",
+                message: "You can see error in the Debug aria",
+                preferredStyle: .alert
+            )
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
     }
 }
 
