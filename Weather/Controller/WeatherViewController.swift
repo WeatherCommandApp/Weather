@@ -170,12 +170,40 @@ class WeatherViewController: UIViewController {
         ]
      
     }
+//MARK: - Network Methods
+    //URLSession
+//    private func fetchData(from url: String) {
+//        NetworkManager.shared.fetchData(from: url) { result in
+//
+//            switch result {
+//            case .success(let weatherData):
+//                self.data = weatherData
+//                if let data = self.data {
+//                    self.setupSections(data: data)
+//                }
+//            case .failure(let error):
+//                self.failedAlert()
+//                print(error)
+//            }
+//            self.setupCollectionView()
+//            self.createDataSource()
+//            self.reloadData()
+//            self.collectionView.reloadData()
+//        }
+//    }
     
-    private func fetchData(from url: String?) {
-        NetworkManager.shared.fetchData(from: url) { weather in
-            self.data = weather
-            if self.data != nil {
-                self.setupSections(data: self.data!)
+    //Alamofire
+    private func fetchDataAlamofire(from url: String) {
+        NetworkManager.shared.fetchDataAlamofire(from: url) { result in
+            switch result {
+            case .success(let weatherData):
+                self.data = weatherData
+                if let data = self.data {
+                    self.setupSections(data: data)
+                }
+            case .failure(let error):
+                self.failedAlert()
+                print(error)
             }
             self.setupCollectionView()
             self.createDataSource()
@@ -183,6 +211,7 @@ class WeatherViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
+    
 //MARK: - Location Methods
     private func fetchUserLocation() {
         LocationManager.shared.getUserLocation { [weak self] location in
@@ -196,7 +225,8 @@ class WeatherViewController: UIViewController {
                 
                 strongSelf.latCoordinates = location.coordinate.latitude
                 strongSelf.lonCoordinates = location.coordinate.longitude
-                strongSelf.fetchData(from: "\(Link.weatherApi.rawValue)&lat=\(strongSelf.latCoordinates ?? 0)&lon=\(strongSelf.lonCoordinates ?? 0)")
+                
+                strongSelf.fetchDataAlamofire(from: "\(Link.weatherApi.rawValue)&lat=\(strongSelf.latCoordinates ?? 0)&lon=\(strongSelf.lonCoordinates ?? 0)")
             }
         }
     }
@@ -222,6 +252,34 @@ class WeatherViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = .white
         
+    }
+    // MARK: - Alert Controller
+    private func successAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Success",
+                message: "You can see the results in the Debug aria",
+                preferredStyle: .alert
+            )
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func failedAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Failed",
+                message: "You can see error in the Debug aria",
+                preferredStyle: .alert
+            )
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
     }
 }
 
