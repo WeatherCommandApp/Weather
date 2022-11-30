@@ -16,6 +16,12 @@ struct Weather: Decodable, Hashable {
     let dt: Int
     let temp: Double
     let feels_like: Double
+    let wind_speed: Double
+    let humidity: Int
+    let uvi: Double
+    let pressure: Int
+    let visibility: Int
+    let dew_point: Double
     let weather: [WeatherDescription]
 }
 
