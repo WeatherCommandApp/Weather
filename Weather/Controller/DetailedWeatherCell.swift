@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class DetailedWeatherCell: UICollectionViewCell {
     
@@ -22,7 +23,7 @@ class DetailedWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 1, alpha: 1)
         customizeElements()
-//        setupConstraints()
+        setupConstraints()
     }
     
     func configure(with modelWeather: ModelWeather) {
@@ -62,15 +63,51 @@ class DetailedWeatherCell: UICollectionViewCell {
     }
 }
 
-//extension DetailedWeatherCell {
-//    
-//    func setupConstraints() {
-//        addSubview(wind)
-//        addSubview(humidity)
-//        addSubview(uvi)
-//        addSubview(pressure)
-//        addSubview(visibility)
-//        addSubview(dewPoint)
-//    }
-//    
-//}
+extension DetailedWeatherCell {
+    
+    func setupConstraints() {
+        addSubview(wind)
+        addSubview(humidity)
+        addSubview(uvi)
+        addSubview(pressure)
+        addSubview(visibility)
+        addSubview(dewPoint)
+        
+        wind.snp.makeConstraints { make in
+            make.left.equalTo(contentView.snp.left).offset(5)
+            make.top.equalTo(contentView.snp.top).offset(5)
+            make.right.equalTo(humidity.snp.left).offset(-5)
+        }
+        
+        humidity.snp.makeConstraints { make in
+            make.left.equalTo(wind.snp.right).offset(5)
+            make.top.equalTo(contentView.snp.top).offset(5)
+            make.right.equalTo(uvi.snp.left).offset(-5)
+        }
+        
+        uvi.snp.makeConstraints { make in
+            make.left.equalTo(humidity.snp.right).offset(5)
+            make.top.equalTo(contentView.snp.top).offset(5)
+            make.right.equalTo(contentView.snp.right).offset(-5)
+        }
+
+        pressure.snp.makeConstraints { make in
+            make.left.equalTo(contentView.snp.left).offset(5)
+            make.top.equalTo(wind.snp.bottom).offset(5)
+            make.right.equalTo(visibility.snp.left).offset(-5)
+        }
+        
+        visibility.snp.makeConstraints { make in
+            make.left.equalTo(pressure.snp.right).offset(5)
+            make.top.equalTo(humidity.snp.bottom).offset(5)
+            make.right.equalTo(dewPoint.snp.left).offset(-5)
+        }
+        
+        dewPoint.snp.makeConstraints { make in
+            make.left.equalTo(visibility.snp.right).offset(5)
+            make.top.equalTo(uvi.snp.bottom).offset(5)
+            make.right.equalTo(contentView.snp.right).offset(-5)
+        }
+    }
+    
+}
