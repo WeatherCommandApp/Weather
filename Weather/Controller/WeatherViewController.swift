@@ -36,6 +36,7 @@ class WeatherViewController: UIViewController {
         view.addSubview(collectionView)
         
         collectionView.register(CurrentWeatherCell.self, forCellWithReuseIdentifier: CurrentWeatherCell.reuseId)
+        collectionView.register(DetailedWeatherCell.self, forCellWithReuseIdentifier: DetailedWeatherCell.reuseId)
         collectionView.register(HourlyWeatherCell.self, forCellWithReuseIdentifier: HourlyWeatherCell.reuseId)
         collectionView.register(DailyWeatherCell.self, forCellWithReuseIdentifier: DailyWeatherCell.reuseId)
         
@@ -47,6 +48,10 @@ class WeatherViewController: UIViewController {
             switch self.sections[indexPath.section].type {
             case .currentWeather:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentWeatherCell.reuseId, for: indexPath) as? CurrentWeatherCell
+                cell?.configure(with: modelWeather)
+                return cell
+            case .detailedWeather:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailedWeatherCell.reuseId, for: indexPath) as? DetailedWeatherCell
                 cell?.configure(with: modelWeather)
                 return cell
             case .hourlyWeather:
@@ -69,6 +74,9 @@ class WeatherViewController: UIViewController {
         for section in sections {
             
             if (section.type == ModelType.currentWeather) {
+                snapshot.appendItems([section.data], toSection: section)
+                
+            } else if (section.type == ModelType.detailedWeather) {
                 snapshot.appendItems([section.data], toSection: section)
                 
             } else if (section.type == ModelType.dailyWeather) {
@@ -95,6 +103,8 @@ class WeatherViewController: UIViewController {
             switch section.type {
             case .currentWeather:
                 return self.createCurrentWeatherSection()
+            case .detailedWeather:
+                return self.createCurrentWeatherSection()
             case .hourlyWeather:
                 return self.createHourlyWeatherSection()
             case .dailyWeather:
@@ -119,6 +129,21 @@ class WeatherViewController: UIViewController {
         return section
     }
     
+    func createDetailedWeatherSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0 / 2.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalWidth(1.0))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 60, trailing: 0)
+        
+        return section
+    }
+
     func createDailyWeatherSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0 / 20.0))
@@ -158,6 +183,10 @@ class WeatherViewController: UIViewController {
             ModelItem(
                 data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
                 type: ModelType.currentWeather
+            ),
+            ModelItem(
+                data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
+                type: ModelType.detailedWeather
             ),
             ModelItem(
                 data: ModelWeather(id: UUID(), current: data.current, hourly: data.hourly, daily: data.daily),
