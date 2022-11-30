@@ -5,10 +5,10 @@
 //  Created by Дарья Носова on 04.05.2022.
 //
 
-import Foundation
 import UIKit
 
 class CurrentWeatherCell: UICollectionViewCell {
+    
     static var reuseId: String = "CurrentWeatherCell"
     
     let temperature = UILabel()

@@ -5,7 +5,6 @@
 //  Created by Дарья Носова on 12.05.2022.
 //
 
-import Foundation
 import UIKit
 
 class DailyWeatherCell: UICollectionViewCell {
