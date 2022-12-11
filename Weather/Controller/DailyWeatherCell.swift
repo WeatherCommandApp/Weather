@@ -5,7 +5,7 @@
 //  Created by Дарья Носова on 12.05.2022.
 //
 
-import Foundation
+import SnapKit
 import UIKit
 
 class DailyWeatherCell: UICollectionViewCell {
@@ -75,14 +75,18 @@ extension DailyWeatherCell {
        
         
         // date constraints
-        date.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        date.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        date.snp.makeConstraints { make in
+            make.width.equalTo(88)
+            make.height.equalTo(25)
+        }
+        
         
         // dayOfTheWeek constraints
-        dayOfTheWeek.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        dayOfTheWeek.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        
+        dayOfTheWeek.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(25)
+        }
+      
         
         // firstStackView
         let firstStackView = UIStackView()
@@ -95,31 +99,36 @@ extension DailyWeatherCell {
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(firstStackView)
         
-        //firstStackView's layer setups
-        firstStackView.layer.shadowColor = UIColor.black.cgColor
-        firstStackView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        firstStackView.layer.shadowOpacity = 0.2
-        firstStackView.layer.shadowRadius = 2.0
 
-        
         // firstStackView constraints
-        firstStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        firstStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        firstStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        firstStackView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        firstStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+        }
         
         
         // weatherIcon constraints
-        weatherIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        weatherIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        weatherIcon.snp.makeConstraints { make in
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
+        
         
         // dayTemperature constraints
-        dayTemperature.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        dayTemperature.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        dayTemperature.snp.makeConstraints { make in
+            make.width.equalTo(40)
+            make.width.equalTo(40)
+        }
+        
         
         // nightTemperature constraints
-        nightTemperature.widthAnchor.constraint(equalToConstant:40).isActive = true
-        nightTemperature.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        nightTemperature.snp.makeConstraints { make in
+            make.width.equalTo(40)
+            make.width.equalTo(40)
+        }
+
         
         // secondStackView
         let secondStackView = UIStackView()
@@ -133,25 +142,22 @@ extension DailyWeatherCell {
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(secondStackView)
         
-        //stackView's layer setups
-        secondStackView.layer.shadowColor = UIColor.black.cgColor
-        secondStackView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        secondStackView.layer.shadowOpacity = 0.2
-        secondStackView.layer.shadowRadius = 2.0
-
         // secondStackView constraints
-        secondStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        secondStackView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        secondStackView.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        secondStackView.leadingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 160).isActive = true
+        secondStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.width.equalTo(120)
+            make.height.equalTo(50)
+            make.leading.equalTo(firstStackView).inset(250)
+        }
         
-        // delimiter constraints
+        // separator constraints
         separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        separator.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
-
+        separator.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+        }
     }
     
     func getDate(timestamp: NSNumber) -> String {
