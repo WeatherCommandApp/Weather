@@ -121,16 +121,15 @@ class WeatherViewController: UIViewController {
     
     func createDailyWeatherSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0 / 20.0))
+                                              heightDimension: .fractionalHeight(1.0 / 17.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(1.0))
+                                               heightDimension: .fractionalHeight(0.95))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets.init(top: 30, leading: 10, bottom: 10, trailing: 10)
-        
         return section
     }
     
@@ -142,7 +141,7 @@ class WeatherViewController: UIViewController {
         item.contentInsets = NSDirectionalEdgeInsets.init(top: 1, leading: 1, bottom: 1, trailing: 1)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(0.19))
+                                               heightDimension: .fractionalHeight(0.15))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         

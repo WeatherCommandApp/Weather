@@ -4,7 +4,7 @@
 //
 //  Created by admin on 04.05.2022.
 //
-import Foundation
+import SnapKit
 import UIKit
 
 class HourlyWeatherCell: UICollectionViewCell {
@@ -26,31 +26,6 @@ class HourlyWeatherCell: UICollectionViewCell {
         self.clipsToBounds = true
         
     }
-
-    func getTime(timestamp: NSNumber) -> String {
-        
-        let date  = Date(timeIntervalSince1970: TimeInterval(truncating: timestamp))
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = "HH:mm"
-        let time = dateFormatter.string(from: date)
-        return time
-    }
-    
-    func configure(with weather: ModelWeather) {
-        let ourWeather = weather.hourly
-        temperature.text = "+\(Int(round((ourWeather[0].temp * 10) / 10)))\u{00B0}"
-        time.text = getTime(timestamp: NSNumber(value: ourWeather[0].dt))
-        weatherImage.image = UIImage(named: ourWeather[0].weather[0].icon)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
-extension HourlyWeatherCell {
     
     func customizeElements() {
         time.font = UIFont(name: "avenir", size: 15)
@@ -60,6 +35,13 @@ extension HourlyWeatherCell {
         temperature.font = UIFont(name: "avenir", size: 15)
         temperature.textColor = .black
         temperature.textAlignment = .center
+    }
+    
+    func configure(with weather: ModelWeather) {
+        let weather = weather.hourly
+        temperature.text = "\(getTemperature(temperature: weather[0].temp))\u{00B0}"
+        time.text = getTime(timestamp: NSNumber(value: weather[0].dt))
+        weatherImage.image = UIImage(named: weather[0].weather[0].icon)
     }
     
     func setupConstraints() {
@@ -87,14 +69,50 @@ extension HourlyWeatherCell {
         stackView.layer.shadowRadius = 2.0
 
         //stackView constraints
-        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        stackView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
         
         //weatherImage constraints
-        weatherImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        weatherImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        weatherImage.snp.makeConstraints { make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+        }
+    }
 
+
+    
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension HourlyWeatherCell {
+    func getTime(timestamp: NSNumber) -> String {
+        
+        let date  = Date(timeIntervalSince1970: TimeInterval(truncating: timestamp))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "HH:mm"
+        let time = dateFormatter.string(from: date)
+        return time
+    }
+    
+    func getTemperature(temperature: Double) -> String {
+        var temperatureWithSigns = ""
+        
+        if temperature > 0 {
+            temperatureWithSigns = "+\(Int(round((temperature * 10)/10)))"
+        } else {
+            temperatureWithSigns = "\(Int(round((temperature * 10)/10)))"
+        }
+        
+        return temperatureWithSigns
     }
 }
